@@ -1,8 +1,20 @@
 import './cart.scss';
 import { goodsArray } from '../../goodsArray';
 import { CardItem } from '../CartItem/CardItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { openModal, toggleCart } from '../../redux/cartSlice';
 
 export const Cart = () => {
+	const isOpen = useSelector((state) => state.cart.isOpen);
+	const dispatch = useDispatch();
+	const handlerCartClose = () => {
+		dispatch(toggleCart());
+	}
+	const handlerModalOpen = () => {
+		dispatch(openModal());
+	}
+	if (!isOpen) return null;
+
 	return (
 		<section className='cart cart_open'>
 			<div className='cart__container'>
@@ -16,6 +28,7 @@ export const Cart = () => {
 							viewBox='0 0 28 28'
 							fill='none'
 							xmlns='http://www.w3.org/2000/svg'
+							onClick={handlerCartClose}
 						>
 							<rect
 								x='5'
@@ -48,7 +61,7 @@ export const Cart = () => {
 				</ul>
 
 				<div className='cart__footer'>
-					<button className='cart__order-btn'>Оформить</button>
+					<button className='cart__order-btn' onClick={handlerModalOpen}>Оформить</button>
 					<p className='cart__price cart__price_total'>0&nbsp;₽</p>
 				</div>
 			</div>

@@ -1,7 +1,11 @@
+import { useState } from 'react';
+import { Choices } from '../Choices/Choices';
 import './filter.scss';
-import './choices.scss';
 
 export const Filter = () => {
+	const [typeIsOpen, setTypeIsOpen] = useState(false);
+	const [priceIsOpen, setPriceIsOpen] = useState(false);
+
 	return (
 		<section className='filter'>
 			<h2 className='visually-hidden'></h2>
@@ -50,12 +54,7 @@ export const Filter = () => {
 					</fieldset>
 
 					<fieldset className='filter__group filter__group_choices'>
-						<div className='filter__choices choices'>
-							<button className='filter__select choices__btn' type='button'>
-								Цена
-							</button>
-
-							<div className='choices__box filter__choices-box'>
+						<Choices buttonLabel="Цена" isOpen={priceIsOpen}>
 								<fieldset className='filter__price'>
 									<input
 										className='filter__input-price'
@@ -70,15 +69,9 @@ export const Filter = () => {
 										placeholder='до'
 									/>
 								</fieldset>
-							</div>
-						</div>
+						</Choices>
 
-						<div className='filter__choices filter__choices_type choices'>
-							<button className='filter__select choices__btn' type='button'>
-								Тип товара
-							</button>
-
-							<div className='choices__box filter__choices-box filter__choices-box_type'>
+						<Choices buttonLabel="Тип товара" isOpen={typeIsOpen}>
 								<ul className='filter__type-list'>
 									<li className='filter__type-item'>
 										<button className='filter__type-button' type='button'>
@@ -106,8 +99,7 @@ export const Filter = () => {
 										</button>
 									</li>
 								</ul>
-							</div>
-						</div>
+						</Choices>
 					</fieldset>
 				</form>
 			</div>

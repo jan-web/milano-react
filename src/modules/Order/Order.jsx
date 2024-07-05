@@ -1,9 +1,41 @@
+import { useDispatch, useSelector } from 'react-redux';
 import './order.scss';
+import { closeModal } from '../../redux/cartSlice';
 
 export const Order = () => {
+	const dispatch = useDispatch();
+	const handlerModalClose = () => {
+		dispatch(closeModal());
+	}
+	const isModalOpen = useSelector((state) => state.cart.isModalOpen);
+
+
+
+	const isOrder = false;
+
+	if(!isModalOpen) {
+		return null;
+	}
+
+	if (isOrder) {
+		return (
+			<div className='order' >
+			<div className='order__wrapper'>
+				<h2 className='order__title'>Заказ оформлен!</h2>
+				<p className='order__id'>
+					Ваш номер заказа: 971f365a-caa1-4cdb-9446-bad2eff047e1
+				</p>
+			</div>
+			<button className='order__close' type='button' onClick={handlerModalClose}>
+					×
+				</button>
+		</div>
+		)
+	} else {
+
+
 	return (
-		<>
-			<div className='order' style={{ display: 'none' }}>
+			<div className='order' onClick={handlerModalClose}>
 				<div className='order__wrapper'>
 					<h2 className='order__title'>Оформить заказ</h2>
 					<form className='order__form' id='order'>
@@ -101,20 +133,15 @@ export const Order = () => {
 							Заказать
 						</button>
 					</div>
+
 				</div>
-				<button className='order__close' type='button'>
+					<button className='order__close' type='button' onClick={handlerModalClose}>
 					×
 				</button>
 			</div>
 
-			<div className='order' style={{ display: 'none' }}>
-				<div className='order__wrapper'>
-					<h2 className='order__title'>Заказ оформлен!</h2>
-					<p className='order__id'>
-						Ваш номер заказа: 971f365a-caa1-4cdb-9446-bad2eff047e1
-					</p>
-				</div>
-			</div>
-		</>
+
+
 	);
+}
 };
