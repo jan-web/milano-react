@@ -2,16 +2,12 @@ import classNames from 'classnames';
 import './choices.scss';
 
 
-export const Choices = ({ children, buttonLabel, className, isOpen }) => {
+export const Choices = ({ children, buttonLabel, className, isOpen, onToggle }) => {
 
-
-  const handleToggle = () => {
-    
-  }
 
 	return (
 		<div className={classNames('choices', className)}>
-			<button className='choices__btn' type='button' onClick={handleToggle}>
+			<button className='choices__btn' type='button' onClick={onToggle}>
 				{buttonLabel}
 			</button>
 

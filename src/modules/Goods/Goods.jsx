@@ -1,10 +1,21 @@
 import './goods.scss';
 
 import { Cart } from '../Cart/Cart';
-import { goodsArray } from '../../goodsArray';
 import { Card } from '../Card/Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGoods } from '../../redux/goodsSlice';
+import { useEffect } from 'react';
 
 export const Goods = () => {
+	const dispatch = useDispatch();
+	const { items: goods, status:  goodsStatus, error} = useSelector(state => state.goods);
+
+	useEffect(() => {
+		if(goodsStatus === 'idle') {
+			dispatch(fetchGoods());
+		}
+	}, [dispatch, goodsStatus]);
+
 	return (
 		<section className='goods'>
 			<div className='container goods__container'>
@@ -12,9 +23,9 @@ export const Goods = () => {
 					<h2 className='goods__title'>Цветы</h2>
 
 					<ul className='goods__list'>
-						{goodsArray.map(item => (
+						{goods.map(item => (
 							<li className='goods__item' key={item.id}>
-								<Card item={item} />
+								<Card {...item} />
 							</li>
 						))}
 					</ul>

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	isOpen: false,
-	isModalOpen: false,
+	items: JSON.parse(localStorage.getItem('cartItems') || '[]'),
 };
 
 const cartSlice = createSlice({
@@ -12,15 +12,23 @@ const cartSlice = createSlice({
 		toggleCart(state) {
 			state.isOpen = !state.isOpen;
 		},
-		openModal(state) {
-			state.isModalOpen = true;
+		addItemToCart(state, action){
+			const {id, img, title, dateDelivery, price, count = 1 } = action.payload;
+
+			const existingItem = state.items.find(item => item.id === id);
+			if(existingItem) {
+				existingItem.count += count;
+			} else {
+				state.items.push({id, img, title, dateDelivery, price, count})
+			}
+
+			localStorage.setItem('crtItems', JSON.stringify(state.items));
+
 		},
-		closeModal(state) {
-			state.isModalOpen = false;
-		},
+
 	},
 });
 
-export const { toggleCart, openModal, closeModal } = cartSlice.actions;
+export const { toggleCart, addItemToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
