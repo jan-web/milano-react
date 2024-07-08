@@ -5,6 +5,7 @@ import { Card } from '../Card/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../redux/goodsSlice';
 import { useEffect } from 'react';
+import { API_URL } from '../../const';
 
 export const Goods = () => {
 	const dispatch = useDispatch();
@@ -29,8 +30,9 @@ export const Goods = () => {
 		content = (
 			<ul className='goods__list'>
 				{goods.map(item => (
-					<li className='goods__item' key={item.id}>
+					<li key={item.id} className='goods__item'>
 						<Card
+							className='goods__card'
 							id={item.id}
 							img={`${API_URL}${item.photoUrl}`}
 							title={item.name}
