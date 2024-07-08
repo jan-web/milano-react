@@ -22,7 +22,7 @@ const cartSlice = createSlice({
 				state.items.push({id, img, title, dateDelivery, price, count})
 			}
 
-			localStorage.setItem('crtItems', JSON.stringify(state.items));
+			localStorage.setItem('cartItems', JSON.stringify(state.items));
 
 		},
 
