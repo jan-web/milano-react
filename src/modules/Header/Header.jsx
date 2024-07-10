@@ -1,9 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './header.scss';
 import { toggleCart } from '../../redux/cartSlice';
 
 export const Header = () => {
 const dispatch = useDispatch();
+const cartItems = useSelector(state => state.cart.items);
+
 const handlerCartToggle = () => {
 	dispatch(toggleCart());
 }
@@ -41,7 +43,7 @@ const handlerCartToggle = () => {
 					alt='Логотип Mirano Flower Boutique'
 				/>
 
-				<button className='header__cart-button' onClick={handlerCartToggle}>0</button>
+				<button className='header__cart-button' onClick={handlerCartToggle}>{cartItems.length}</button>
 			</div>
 		</header>
 	);
