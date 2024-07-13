@@ -1,8 +1,10 @@
+import { API_URL } from '../../const';
+
 export const CardItem = ({ item }) => {
 	return (
 		<>
-			<img className='cart__img' src={item.img} alt={item.title} />
-			<h4 className='cart__item-title'>{item.title}</h4>
+			<img className='cart__img' src={`${API_URL}${item.photoUrl}`} alt={item.name} />
+			<h4 className='cart__item-title'>{item.name}</h4>
 			<div className='cart__counter'>
 				<button className='cart__counter-btn'>-</button>
 				<input

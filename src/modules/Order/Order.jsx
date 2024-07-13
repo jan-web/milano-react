@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './order.scss';
 import { closeModal } from '../../redux/orderSlice';
+import { useCallback, useEffect } from 'react';
 
 export const Order = () => {
 	const dispatch = useDispatch();
@@ -8,12 +9,28 @@ export const Order = () => {
 	const isOpen = useSelector(state => state.order.isOpen);
 	const isOrderReady = false;
 
-	const handlerClose = ({ target }) => {
+	const handlerClose = useCallback(() => {
 		dispatch(closeModal());
-		if (target.matches('.order') || target.closest('.order__close')) {
-			console.log(123);
+
+
+	}, [dispatch])
+
+
+
+	useEffect(() => {
+		const handleEsc = e => {
+			if (e.key === 'Escape') {
+				handlerClose();
+			}
+		};
+		if (isOpen) {
+			document.addEventListener('keydown', handleEsc);
 		}
-	};
+
+		return () => {
+			document.removeEventListener('keydown', handleEsc);
+		};
+	}, [isOpen, handlerClose]);
 
 	if (!isOpen) {
 		return null;
@@ -21,7 +38,7 @@ export const Order = () => {
 
 	return (
 		<div className='order' onClick={handlerClose}>
-			<div className='order__wrapper' onClick={(e) => e.stopPropagation()}>
+			<div className='order__wrapper' onClick={e => e.stopPropagation()}>
 				{isOrderReady ? (
 					<>
 						<h2 className='order__title'>Заказ оформлен!</h2>
@@ -130,10 +147,7 @@ export const Order = () => {
 					</>
 				)}
 			</div>
-			<button
-				className='order__close'
-				type='button'
-			>
+			<button className='order__close' type='button'>
 				×
 			</button>
 		</div>

@@ -6,30 +6,42 @@ import { Header } from './modules/Header/Header';
 import { Hero } from './modules/Hero/Hero';
 import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
-import { useEffect } from 'react';
-import { regiterCart } from './redux/cartSlice';
+import { useEffect, useState } from 'react';
+import { registerCart } from './redux/cartSlice';
 export const App = () => {
 	const dispatch = useDispatch();
+	const [titleGoods, setTitleGoods] = useState('');
+
+	const [goodsRef, setGoodsRef] = useState(null);
+
+	const handleScrollToGoods = () => {
+		if (goodsRef) {
+			console.log('goodsRef: ', goodsRef);
+			goodsRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
 
 	useEffect(() => {
 		const initializeCart = async () => {
-			await dispatch(regiterCart());
-			// await dispatch(regiterCart());
+			await dispatch(registerCart());
 		};
 
 		initializeCart();
-	}, [dispatch])
+	}, [dispatch]);
 
 	return (
 		<>
-			<Header />
+			<Header
+				setTitleGoods={setTitleGoods}
+				scrollToGoods={handleScrollToGoods}
+			/>
 
 			<main>
 				<Hero />
 
-				<Filter />
+				<Filter setTitleGoods={setTitleGoods} />
 
-				<Goods />
+				<Goods title={titleGoods} setGoodsRef={setGoodsRef} />
 
 				<Subscribe />
 			</main>

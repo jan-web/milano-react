@@ -7,7 +7,7 @@ export const Card = ({ id, img, title, dateDelivery, price }) => {
 	const dispatch = useDispatch();
 
 	const handlerAddToCard = () => {
-		dispatch(addItemToCart({ id, img, title, dateDelivery, price }));
+		dispatch(addItemToCart({ productId: id, quantity: 1 }));
 	};
 	const [titleOnButton, setTitleOnButton] = useState(`${price}\u00A0₽`);
 
